@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ToDoItem from '../components/ToDoItem';
+import { Container, Header, ToDoForm, ToDoInput, ToDoButton, ToDoUl } from '../styles';
 
 const Todo = () => {
     const API_URL = ' https://pre-onboarding-selection-task.shop/'
@@ -14,7 +15,7 @@ const Todo = () => {
     const onChangeHandler = (e) => setInput(e.target.value);
     const createNewTask = (e) => {
         e.preventDefault();
-        if(input.length !== ''){
+        if(input !== ''){
             axios.post(`${API_URL}todos`, {todo: input}, {
                 headers: {
                     Authorization: `Bearer ${ACCESS_TOKEN}`
@@ -22,10 +23,14 @@ const Todo = () => {
             })
             .then(() => {
                 renderTodo();
+                setInput('');
             })
             .catch((err) => {
                 console.log(err.response);
             }).finally(() => {});
+        }
+        else{
+            alert('할 일을 추가해 주세요.')
         }
     }
     const renderTodo = async () =>  {
@@ -50,18 +55,19 @@ const Todo = () => {
     }, [ACCESS_TOKEN, navigate])
 
     return (
-        <div>
-            <form onSubmit={createNewTask}>
-                <input data-testid="new-todo-input" value={input} onChange={onChangeHandler} />
-                <button data-testid="new-todo-add-button">추가</button>
-            </form>
+        <Container>
+            <Header>ToDo List</Header>
+            <ToDoForm onSubmit={createNewTask}>
+                <ToDoInput data-testid="new-todo-input" value={input} onChange={onChangeHandler} />
+                <ToDoButton data-testid="new-todo-add-button">추가</ToDoButton>
+            </ToDoForm>
 
-            <ul>
+            <ToDoUl>
                 {todos.map((todo) => {
                     return <ToDoItem key={todo.id} todo={todo} renderTodo={renderTodo}/>
                 })}
-            </ul>
-        </div>
+            </ToDoUl>
+        </Container>
     )
 }
 

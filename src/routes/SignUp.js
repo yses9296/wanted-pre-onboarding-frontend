@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { Container, Header, Form, Input, Button, Error, LinkItem } from '../styles';
 
 const SignUp = () => {
     const API_URL = ' https://pre-onboarding-selection-task.shop/'
@@ -24,6 +25,7 @@ const SignUp = () => {
             email: email,
             password: password
         }).then((response) => {
+            alert('회원가입에 성공하였습니다. 로그인을 시도해주세요.')
             navigate("/signin");
         }).catch((err) => {
             setSignUpError(err.response.data);
@@ -38,19 +40,19 @@ const SignUp = () => {
         if(ACCESS_TOKEN) {
             navigate("/todo");
         }
-    }, [])
+    }, [ACCESS_TOKEN, navigate])
 
     return (
-        <div>
-            <h2>회원가입</h2>
-            <form onSubmit={onSubmitHandler}>
-                <input type="email" data-testid="email-input" value={email} placeholder='Email' onChange={onChangeEmail} required/>
-                <input type="password" data-testid="password-input" value={password} placeholder='Password' onChange={onChangePassword} required/>
-                <button data-testid="signup-button" disabled={disabled}>회원가입</button>
-            </form>
-            {signUpError && <p>{signUpError}</p>}
-            <p>이미 회원이신가요?</p> <Link to='/signin'>로그인</Link>
-        </div>
+        <Container>
+            <Header>회원가입</Header>
+            <Form onSubmit={onSubmitHandler}>
+                <Input type="email" data-testid="email-input" value={email} placeholder='Email' onChange={onChangeEmail} required/>
+                <Input type="password" data-testid="password-input" value={password} placeholder='Password' onChange={onChangePassword} required/>
+                <Button data-testid="signin-button" disabled={disabled}>회원가입</Button>
+            </Form>
+            {signUpError && <Error>{signUpError}</Error>}
+            <p>이미 회원이신가요?</p> <LinkItem to='/signin'>로그인</LinkItem>
+        </Container>
     )
 }
 

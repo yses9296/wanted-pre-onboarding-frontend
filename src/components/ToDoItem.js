@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToDoLi, ToDoLabel, EditInput, ButtonWrap, ToDoItemButton } from '../styles';
 
 const ToDoItem = ({ todo, renderTodo }) => {
     const API_URL = ' https://pre-onboarding-selection-task.shop/';
@@ -58,20 +59,25 @@ const ToDoItem = ({ todo, renderTodo }) => {
     return (
     <>
         {isEdit ? (
-            <li>
-                <input data-testid="modify-input" value={value} onChange={onChangeHandler}/>
-                <button data-testid="submit-button" onClick={updateTask}>제출</button>
-                <button data-testid="cancel-button" onClick={toggleEdit}>취소</button>
-            </li>
+            <ToDoLi>
+                <EditInput data-testid="modify-input" value={value} onChange={onChangeHandler}/>
+                <ButtonWrap>
+                    <ToDoItemButton data-testid="submit-button" onClick={updateTask}>제출</ToDoItemButton>
+                    <ToDoItemButton data-testid="cancel-button" onClick={toggleEdit}>취소</ToDoItemButton>
+                </ButtonWrap>
+            </ToDoLi>
         ) : (
-            <li>
-                <label>
+            <ToDoLi>
+                <ToDoLabel>
                     <input type="checkbox" onChange={toggleChecked} checked={isCompleted}/>
                     <span>{value}</span>
-                </label>
-                <button data-testid="modify-button" value={isEdit} onClick={toggleEdit}>수정</button>
-                <button data-testid="delete-button" onClick={removeTask}>삭제</button>
-            </li>
+                </ToDoLabel>
+                <ButtonWrap>
+                    <ToDoItemButton data-testid="modify-button" value={isEdit} onClick={toggleEdit}>수정</ToDoItemButton>
+                    <ToDoItemButton data-testid="delete-button" onClick={removeTask}>삭제</ToDoItemButton>
+                </ButtonWrap>
+
+            </ToDoLi>
         )}
     </>
     )

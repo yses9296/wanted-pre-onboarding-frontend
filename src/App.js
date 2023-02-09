@@ -7,19 +7,20 @@ import Todo from './routes/Todo';
 
 function App() {
   return (
-    <Container>
+    <Main>
       <Routes>
         <Route path='/' element={<SignUp/>} />
         <Route path='/signup' element={<SignUp/>} />
         <Route path='/signin' element={<SignIn/>} />
         <Route path='/todo' element={<Todo/>} />
       </Routes>
-    </Container>
+    </Main>
   );
 }
-const Container = styled.div`
+
+const Main = styled.div`
   width: 60%;
-  height: 100vh;
+  min-height: 90vh;
   margin: 0 auto;
 `
 
