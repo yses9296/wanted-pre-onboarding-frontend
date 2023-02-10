@@ -10,7 +10,6 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
-    const [signUpError, setSignUpError] = useState('');
 
     const onChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -27,8 +26,11 @@ const SignUp = () => {
         }).then((response) => {
             alert('회원가입에 성공하였습니다. 로그인을 시도해주세요.')
             navigate("/signin");
-        }).catch((err) => {
-            setSignUpError(err.response.data);
+        }).catch((error) => {
+            if (error.response.status === 400) {
+                alert('이미 존재하는 이메일입니다.');
+                navigate("/");
+            }
         }).finally(() => {});
     }
 
@@ -50,7 +52,7 @@ const SignUp = () => {
                 <Input type="password" data-testid="password-input" value={password} placeholder='Password' onChange={onChangePassword} required/>
                 <Button data-testid="signin-button" disabled={disabled}>회원가입</Button>
             </Form>
-            {signUpError && <Error>{signUpError}</Error>}
+
             <p>이미 회원이신가요?</p> <LinkItem to='/signin'>로그인</LinkItem>
         </Container>
     )

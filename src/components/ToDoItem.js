@@ -7,17 +7,20 @@ const ToDoItem = ({ todo, renderTodo }) => {
     const ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
     const [isEdit, setIsEdit] = useState(false);
     const [value, setValue] = useState(todo.todo);
+    const [newValue, setNewValue] = useState(todo.todo);
     const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
 
-    const toggleEdit = () => {setIsEdit(prev => !prev)};
-    const onChangeHandler = (e) => setValue(e.target.value);
+    const toggleEdit = () => {
+        setIsEdit(prev => !prev);
+    };
+    const onChangeHandler = (e) => setNewValue(e.target.value);
 
-    const updateTask = () => {
-        if(value !== ''){
-            axios.put(
+    const updateTask = async () => {
+        if(newValue !== ''){
+            await axios.put(
                 `${API_URL}todos/${todo.id}`, 
                 {
-                    todo: value,
+                    todo: newValue,
                     isCompleted: isCompleted
                 },
                 {
@@ -27,10 +30,13 @@ const ToDoItem = ({ todo, renderTodo }) => {
                 }            
             ).then((response) => {
                 setIsEdit(false);
+                setValue(newValue)
                 renderTodo();
             }).catch((err) => {
                 alert(`Update task Error ${err}`)
-            }).finally(() => {});
+            }).finally(() => {
+                renderTodo();
+            });
         }
     }
     const removeTask = () => {
@@ -54,13 +60,17 @@ const ToDoItem = ({ todo, renderTodo }) => {
 
     useEffect(() => {
         updateTask();
-    }, [isCompleted])
+    }, [isCompleted]);
+
+    useEffect(() => {
+        renderTodo();
+    },[])
 
     return (
     <>
         {isEdit ? (
             <ToDoLi>
-                <EditInput data-testid="modify-input" value={value} onChange={onChangeHandler}/>
+                <EditInput data-testid="modify-input" value={newValue} onChange={onChangeHandler}/>
                 <ButtonWrap>
                     <ToDoItemButton data-testid="submit-button" onClick={updateTask}>제출</ToDoItemButton>
                     <ToDoItemButton data-testid="cancel-button" onClick={toggleEdit}>취소</ToDoItemButton>

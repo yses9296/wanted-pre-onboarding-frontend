@@ -46,7 +46,7 @@ const Todo = () => {
 
     useEffect(() => {
         renderTodo();
-    },[])
+    },[ToDoItem])
 
     useEffect(() => {
         if(!ACCESS_TOKEN) {
