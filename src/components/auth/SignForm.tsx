@@ -1,7 +1,7 @@
 import AuthContext from 'context/auth/authContext';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Validation from './Validation';
+import Validation from '../auth/Validation';
 
 const SignForm = ({ page }: { page: string }) => {
 	const [email, setEmail] = useState<string>('');
