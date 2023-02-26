@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext, { AuthContextType } from 'context/authContext';
+import AuthContext, { AuthContextType } from 'context/auth/authContext';
 
 import { signup as signUpRequest, signin as signInRequest } from 'apis/auth/authApi';
 import { Auth } from 'apis/auth/authApi.type';

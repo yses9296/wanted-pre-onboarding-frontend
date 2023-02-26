@@ -1,4 +1,4 @@
-import AuthContext from 'context/authContext';
+import AuthContext from 'context/auth/authContext';
 import NotFoundPage from 'pages/NotFoundPage';
 import { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';

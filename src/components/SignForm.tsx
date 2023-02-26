@@ -1,4 +1,4 @@
-import AuthContext from 'context/authContext';
+import AuthContext from 'context/auth/authContext';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Validation from './Validation';
