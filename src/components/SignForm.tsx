@@ -47,7 +47,7 @@ const SignForm = ({ page }: { page: string }) => {
 						}}
 					/>
 				</p>
-				{focusOn.email && validMsg.email ? <strong>{validMsg.email}</strong> : null}
+				{focusOn.email && <strong>{validMsg.email}</strong>}
 
 				<p>
 					<label>비밀번호</label>
@@ -66,7 +66,7 @@ const SignForm = ({ page }: { page: string }) => {
 						}}
 					/>
 				</p>
-				{focusOn.password && validMsg.password ? <strong>{validMsg.password}</strong> : null}
+				{focusOn.password && <strong>{validMsg.password}</strong>}
 
 				<button disabled={!isValidForm}>{page === 'signup' ? '회원가입' : '로그인'}</button>
 			</form>
