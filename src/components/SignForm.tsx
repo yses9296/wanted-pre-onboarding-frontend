@@ -1,16 +1,17 @@
-import { signin, signup } from 'apis/auth/authApi';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from 'context/authContext';
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Validation from './Validation';
 
 const SignForm = ({ page }: { page: string }) => {
-	const navigate = useNavigate();
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	const [focusOn, setFocusOn] = useState({
 		email: false,
 		password: false,
 	});
+
+	const { signUp, signIn } = useContext(AuthContext);
 
 	const focusOnHandler = (e: React.ChangeEvent<HTMLInputElement>, value: boolean) => {
 		setFocusOn({
@@ -23,20 +24,9 @@ const SignForm = ({ page }: { page: string }) => {
 
 	const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		page === 'signup'
-			? signup({ email, password })
-					.then(res => {
-						alert(res.message);
-						navigate('/signin');
-					})
-					.catch(err => alert(err.message))
-			: signin({ email, password })
-					.then(res => {
-						localStorage.setItem('ACCESS_TOKEN', res.accessToken);
-						navigate('/todo');
-					})
-					.catch(err => alert(err.message));
+		page === 'signup' ? signUp({ email, password }) : signIn({ email, password });
 	};
+
 	return (
 		<>
 			<form onSubmit={onSubmitHandler}>
@@ -57,7 +47,7 @@ const SignForm = ({ page }: { page: string }) => {
 						}}
 					/>
 				</p>
-				{focusOn.email && validMsg?.email ? <strong>{validMsg.email}</strong> : null}
+				{focusOn.email && validMsg.email ? <strong>{validMsg.email}</strong> : null}
 
 				<p>
 					<label>비밀번호</label>
@@ -76,7 +66,7 @@ const SignForm = ({ page }: { page: string }) => {
 						}}
 					/>
 				</p>
-				{focusOn.password && validMsg?.password ? <strong>{validMsg.password}</strong> : null}
+				{focusOn.password && validMsg.password ? <strong>{validMsg.password}</strong> : null}
 
 				<button disabled={!isValidForm}>{page === 'signup' ? '회원가입' : '로그인'}</button>
 			</form>

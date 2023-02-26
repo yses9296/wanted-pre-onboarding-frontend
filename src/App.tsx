@@ -1,3 +1,4 @@
+import AuthProvider from 'context/authProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
@@ -8,12 +9,14 @@ function App() {
 		<div>
 			<h1>Todo List</h1>
 			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<SignInPage />} />
-					<Route path="/signin" element={<SignInPage />} />
-					<Route path="/signup" element={<SignUpPage />} />
-					<Route path="/todo" element={<TodoPage />} />
-				</Routes>
+				<AuthProvider>
+					<Routes>
+						<Route path="/" element={<SignInPage />} />
+						<Route path="/signin" element={<SignInPage />} />
+						<Route path="/signup" element={<SignUpPage />} />
+						<Route path="/todo" element={<TodoPage />} />
+					</Routes>
+				</AuthProvider>
 			</BrowserRouter>
 		</div>
 	);
