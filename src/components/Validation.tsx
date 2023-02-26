@@ -1,8 +1,8 @@
 type ValidationResponse = {
 	valid: boolean;
 	message: {
-		email?: string;
-		password?: string;
+		email: string;
+		password: string;
 	};
 };
 
