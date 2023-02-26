@@ -1,4 +1,5 @@
 import AuthContext from 'context/authContext';
+import NotFoundPage from 'pages/NotFoundPage';
 import { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SignInPage from './pages/SignInPage';
@@ -26,6 +27,8 @@ function App() {
 					element={hasToken ? <Navigate to="/todo" replace /> : <SignUpPage />}
 				/>
 				<Route path="/todo" element={hasToken ? <TodoPage /> : <Navigate to="/signin" replace />} />
+
+				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</div>
 	);
