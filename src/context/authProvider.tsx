@@ -37,7 +37,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		setHasToken(localStorage.getItem(ACCESS_TOKEN) ? true : false);
-	}, [navigate]);
+	}, []);
 
 	return (
 		<AuthContext.Provider value={{ hasToken, signIn, signUp, signOut }}>

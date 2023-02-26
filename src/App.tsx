@@ -1,23 +1,32 @@
-import AuthProvider from 'context/authProvider';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthContext from 'context/authContext';
+import { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import TodoPage from './pages/TodoPage';
 
 function App() {
+	const { hasToken } = useContext(AuthContext);
+
 	return (
 		<div>
 			<h1>Todo List</h1>
-			<BrowserRouter>
-				<AuthProvider>
-					<Routes>
-						<Route path="/" element={<SignInPage />} />
-						<Route path="/signin" element={<SignInPage />} />
-						<Route path="/signup" element={<SignUpPage />} />
-						<Route path="/todo" element={<TodoPage />} />
-					</Routes>
-				</AuthProvider>
-			</BrowserRouter>
+
+			<Routes>
+				<Route
+					path="/"
+					element={hasToken ? <Navigate to="/todo" replace /> : <Navigate to="/signin" replace />}
+				/>
+				<Route
+					path="/signin"
+					element={hasToken ? <Navigate to="/todo" replace /> : <SignInPage />}
+				/>
+				<Route
+					path="/signup"
+					element={hasToken ? <Navigate to="/todo" replace /> : <SignUpPage />}
+				/>
+				<Route path="/todo" element={hasToken ? <TodoPage /> : <Navigate to="/signin" replace />} />
+			</Routes>
 		</div>
 	);
 }

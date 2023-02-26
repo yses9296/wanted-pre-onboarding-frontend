@@ -1,8 +1,6 @@
 import { Auth } from 'apis/auth/authApi.type';
 import { createContext } from 'react';
 
-export {};
-
 export type AuthContextType = {
 	hasToken: boolean;
 	signIn: (props: Auth) => void;
