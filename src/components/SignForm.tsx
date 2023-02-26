@@ -1,3 +1,4 @@
+import { signin, signup } from 'apis/auth/authApi';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Validation from './Validation';
@@ -21,6 +22,9 @@ const SignForm = ({ page }: { page: string }) => {
 
 	const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		page === 'signup'
+			? signup({ email, password }).then(() => console.log('signup'))
+			: signin({ email, password }).then(() => console.log('signin'));
 	};
 	return (
 		<>
