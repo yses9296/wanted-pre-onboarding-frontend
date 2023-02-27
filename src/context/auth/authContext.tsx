@@ -5,7 +5,7 @@ export type AuthContextType = {
 	hasToken: boolean;
 	signIn: (props: Auth) => void;
 	signUp: (props: Auth) => void;
-	signOut: VoidFunction;
+	signOut: () => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
