@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 
 export const clientAuthAPI = axios.create({
 	baseURL: 'https://pre-onboarding-selection-task.shop/',
@@ -18,8 +18,12 @@ export const clientTodoAPI = axios.create({
 clientTodoAPI.interceptors.request.use(config => {
 	const accessToken = localStorage.getItem('ACCESS_TOKEN');
 
-	if (accessToken && config.headers) {
-		config.headers['Authorization'] = `Bearer ${accessToken}`;
+	if (!accessToken) {
+		return Promise.reject(new Error('인증되지 않은 접근입니다.\n다시 로그인해주세요.'));
 	}
-	return config;
+
+	return {
+		...config,
+		headers: { ...config.headers, Authorization: `Bearer ${accessToken}` },
+	} as InternalAxiosRequestConfig;
 });
