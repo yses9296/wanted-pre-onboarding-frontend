@@ -11,22 +11,24 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 	const navigate = useNavigate();
 	const [hasToken, setHasToken] = useState(false);
 
-	const signUp: AuthContextType['signUp'] = ({ email, password }: Auth) => {
-		signUpRequest({ email, password })
-			.then(res => {
-				alert(res.message);
-				navigate('/signin');
-			})
-			.catch(err => alert(err.message));
+	const signUp: AuthContextType['signUp'] = async ({ email, password }: Auth) => {
+		try {
+			const response = await signUpRequest({ email, password });
+			alert(response.message);
+			navigate('/signin');
+		} catch (err) {
+			alert(err);
+		}
 	};
 
-	const signIn: AuthContextType['signUp'] = ({ email, password }: Auth) => {
-		signInRequest({ email, password })
-			.then(res => {
-				localStorage.setItem(ACCESS_TOKEN, res.accessToken);
-				navigate('/todo');
-			})
-			.catch(err => alert(err.message));
+	const signIn: AuthContextType['signIn'] = async ({ email, password }: Auth) => {
+		try {
+			const response = await signInRequest({ email, password });
+			localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+			navigate('/todo');
+		} catch (err) {
+			alert(err);
+		}
 	};
 
 	const signOut = () => {
