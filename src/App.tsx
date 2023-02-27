@@ -10,9 +10,7 @@ function App() {
 	const { hasToken } = useContext(AuthContext);
 
 	return (
-		<div>
-			<h1>Todo List</h1>
-
+		<div className="w-full flex items-center justify-center">
 			<Routes>
 				<Route
 					path="/"

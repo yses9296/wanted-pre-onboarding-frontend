@@ -6,8 +6,7 @@ const TodoList = () => {
 	const { todos } = useTodo();
 
 	return (
-		<div>
-			<h4>TodoList</h4>
+		<div className="w-4/5 py-8">
 			{todos.map(item => (
 				<TodoItem
 					key={item.id}
