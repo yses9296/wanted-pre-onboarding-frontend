@@ -4,13 +4,13 @@ import { Auth, SignUpResponseAuth, SignInResponseAuth } from 'apis/auth/authApi.
 
 export async function signup({ email, password }: Auth): Promise<SignUpResponseAuth> {
 	return new Promise((resolve, reject) => {
-		let errMsg: string = '';
 		signUpInstance({ email, password })
 			.then((res: AxiosResponse) => {
 				resolve({ message: '회원가입에 성공하였습니다. 로그인을 시도해주세요.' });
 			})
 			.catch((error: AxiosError) => {
 				const status = error.response?.status;
+				let errMsg: string = '';
 				if (status === 400) {
 					errMsg = '이미 존재하는 이메일입니다.';
 				} else {

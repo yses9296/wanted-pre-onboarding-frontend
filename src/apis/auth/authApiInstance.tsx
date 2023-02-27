@@ -1,9 +1,9 @@
 import { clientAuthAPI } from 'apis/clientAPI';
-import { Auth } from 'apis/auth/authApi.type';
+import { Auth, SignInResponseAuth, SignUpResponseAuth } from 'apis/auth/authApi.type';
 
-export const signUpInstance = async ({ email, password }: Auth) => {
-	return await clientAuthAPI.post(`auth/signup`, { email, password });
+export const signUpInstance = ({ email, password }: Auth) => {
+	return clientAuthAPI.post<SignUpResponseAuth>(`signup`, { email, password });
 };
-export const signInInstance = async ({ email, password }: Auth) => {
-	return await clientAuthAPI.post(`auth/signIn`, { email, password });
+export const signInInstance = ({ email, password }: Auth) => {
+	return clientAuthAPI.post<SignInResponseAuth>(`signIn`, { email, password });
 };

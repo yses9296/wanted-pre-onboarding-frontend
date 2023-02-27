@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 export const clientAuthAPI = axios.create({
-	baseURL: 'https://pre-onboarding-selection-task.shop/',
+	baseURL: 'https://pre-onboarding-selection-task.shop/auth/',
 	headers: {
 		'Content-Type': 'application/json',
 	},
