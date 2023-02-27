@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext, { AuthContextType } from 'context/auth/authContext';
 
-import { signup as signUpRequest, signin as signInRequest } from 'apis/auth/authApi';
+import { signUpRequest, signInRequest } from 'apis/auth/authApi';
 import { Auth } from 'apis/auth/authApi.type';
 
 const ACCESS_TOKEN = 'ACCESS_TOKEN';
@@ -12,23 +12,26 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [hasToken, setHasToken] = useState(false);
 
 	const signUp: AuthContextType['signUp'] = async ({ email, password }: Auth) => {
-		try {
-			const response = await signUpRequest({ email, password });
-			alert(response.message);
-			navigate('/signin');
-		} catch (err) {
-			alert(err);
-		}
+		signUpRequest({ email, password })
+			.then(response => {
+				alert(response.message);
+				navigate('/signin');
+			})
+			.catch(error => {
+				alert(error.message);
+			});
 	};
 
 	const signIn: AuthContextType['signIn'] = async ({ email, password }: Auth) => {
-		try {
-			const response = await signInRequest({ email, password });
-			localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-			navigate('/todo');
-		} catch (err) {
-			alert(err);
-		}
+		signInRequest({ email, password })
+			.then(response => {
+				localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+				setHasToken(true);
+				navigate('/todo');
+			})
+			.catch(error => {
+				alert(error.message);
+			});
 	};
 
 	const signOut = () => {
